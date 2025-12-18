@@ -11,3 +11,6 @@ kotlin {
         jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_11
     }
 }
+dependencies {
+    implementation("io.github.serpro69:kotlin-faker:1.16.0")
+}
