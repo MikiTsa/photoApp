@@ -81,6 +81,44 @@ into a modern and visually engaging experience.
 
 ------------------------------------------------------------------------
 
-## 📷 Screenshots (Will be added later)
+## 📷 Screenshots
 
-Screenshots will be included once the UI reaches a presentable stage.
+### Home Page
+<img src="screenshots/ss_HomePage.jpeg" width="250" alt="Home Page"/>
+
+*Nearby landmarks sorted by distance*
+
+### Achievements
+<img src="screenshots/ss_AchievementPage.jpeg" width="250" alt="Achievements"/>
+
+*Track progress and unlock achievements*
+
+### Map
+<img src="screenshots/ss_MapPage.jpeg" width="250" alt="Map"/>
+
+*Map integration (coming soon)*
+
+### All Landmarks
+<img src="screenshots/ss_LandmarksList.jpeg" width="250" alt="Landmarks List"/>
+
+*Complete list of landmarks with details*
+
+### Add Landmark
+<img src="screenshots/ss_AddLandmark.jpeg" width="250" alt="Add Landmark"/>
+
+*Form for adding new landmarks*
+
+### Edit Landmark
+<img src="screenshots/ss_EditLandmark.jpeg" width="250" alt="Edit Landmark"/>
+
+*Edit existing landmark details*
+
+### Delete Landmark
+<img src="screenshots/ss_DeleteLandmark.jpeg" width="250" alt="Delete Landmark"/>
+
+*Confirmation before deletion*
+
+### Profile
+<img src="screenshots/ss_ProfilePage.jpeg" width="250" alt="Profile"/>
+
+*User statistics and progress*
