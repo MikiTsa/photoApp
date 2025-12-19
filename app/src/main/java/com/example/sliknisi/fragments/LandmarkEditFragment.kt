@@ -162,7 +162,6 @@ class LandmarkEditFragment : Fragment() {
         val category = LandmarkCategory.valueOf(binding.spinnerCategory.selectedItem.toString())
 
         if (isEditMode && landmarkId != null) {
-            // Update existing landmark
             val updatedLandmark = Landmark(
                 id = landmarkId!!,
                 name = name,
@@ -179,7 +178,6 @@ class LandmarkEditFragment : Fragment() {
             app.updateLandmark(updatedLandmark)
             Toast.makeText(requireContext(), "Landmark updated!", Toast.LENGTH_SHORT).show()
         } else {
-            // Add new landmark
             val newLandmark = Landmark(
                 name = name,
                 description = description,

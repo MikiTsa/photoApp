@@ -21,6 +21,11 @@ class MapFragment : Fragment() {
         return binding.root
     }
 
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
+        // Map will be implemented in Task 7.3 with OpenStreetMap
+    }
+
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null

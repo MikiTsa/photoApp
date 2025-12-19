@@ -25,7 +25,6 @@ class MainActivity : AppCompatActivity() {
             .findFragmentById(R.id.nav_host_fragment) as NavHostFragment
         val navController = navHostFragment.navController
 
-        // Connect bottom navigation with nav controller
         binding.bottomNavigation.setupWithNavController(navController)
     }
 
@@ -36,11 +35,29 @@ class MainActivity : AppCompatActivity() {
 
         binding.fabHome.setOnClickListener {
             navController.navigate(R.id.homeFragment)
+
+            binding.bottomNavigation.menu.setGroupCheckable(0, true, false)
+            for (i in 0 until binding.bottomNavigation.menu.size()) {
+                binding.bottomNavigation.menu.getItem(i).isChecked = false
+            }
+            binding.bottomNavigation.menu.setGroupCheckable(0, true, true)
+        }
+
+        navController.addOnDestinationChangedListener { _, destination, _ ->
+            when (destination.id) {
+                R.id.homeFragment -> {
+                    // Clear bottom nav selection when on home
+                    binding.bottomNavigation.menu.setGroupCheckable(0, true, false)
+                    for (i in 0 until binding.bottomNavigation.menu.size()) {
+                        binding.bottomNavigation.menu.getItem(i).isChecked = false
+                    }
+                    binding.bottomNavigation.menu.setGroupCheckable(0, true, true)
+                }
+            }
         }
     }
 
     private fun removeNavigationBadges() {
-        // Remove any notification badges/dots from nav items
         binding.bottomNavigation.removeBadge(R.id.achievementsFragment)
         binding.bottomNavigation.removeBadge(R.id.mapFragment)
         binding.bottomNavigation.removeBadge(R.id.addFragment)

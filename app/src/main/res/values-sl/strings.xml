@@ -64,6 +64,7 @@
     <string name="msg_data_saved">Podatki uspešno shranjeni</string>
     <string name="msg_data_load_error">Napaka pri nalaganju podatkov</string>
 
+    <string name="map_coming_soon">Pride k malu</string>
     <string name="msg_points_required">Obvezno polje točke</string>
     <string name="settings_title">Nastavitve</string>
     <string name="settings_username">Uporabniško ime</string>
@@ -82,4 +83,9 @@
     <string name="landmarks_list_title">Vse Znamenitosti</string>
     <string name="msg_latitude_required">Resna latituda</string>
     <string name="msg_longtitude_required">Resna longtituda</string>
+    <string name="nearby_landmarks_title">Znamenitosti v bližini</string>
+    <string name="nearby_landmarks_subtitle">Obiskaj znamenitosti v bližini</string>
+    <string name="all_landmarks_visited">Čestitke! Obiskal si vse znamenitosti!</string>
+    <string name="statistics">Statistike</string>
+    <string name="achievements_title">"Dosežki "</string>
 </resources>

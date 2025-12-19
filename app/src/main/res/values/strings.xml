@@ -61,9 +61,6 @@
     <string name="msg_data_saved">Data saved successfully</string>
     <string name="msg_data_load_error">Error loading data</string>
     <string name="msg_field_required">Field Required</string>
-    <string name="msg_latitude_required">Valid Latitute Required</string>
-    <string name="msg_longtitude_required">valid Longtitude Required</string>
-    <string name="msg_points_required">Valid Points Required</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_username">Username</string>
@@ -81,4 +78,15 @@
     <string name="edit_landmark_title">Edit Landmark</string>
     <string name="add_landmark_subtitle">Fill in landmark details</string>
     <string name="landmarks_list_title">All Landmarks</string>
+
+    <string name="nearby_landmarks_title">Nearby Landmarks</string>
+    <string name="nearby_landmarks_subtitle">Discover places close to you</string>
+    <string name="all_landmarks_visited">Congratulations! You\'ve visited all landmarks!</string>
+
+    <string name="statistics">Statistics</string>
+    <string name="achievements_title">Achievements</string>
+    <string name="map_coming_soon">Map Coming Soon</string>
+    <string name="msg_points_required">Points Required</string>
+    <string name="msg_latitude_required">Latitude required</string>
+    <string name="msg_longtitude_required">Longtitude required</string>
 </resources>

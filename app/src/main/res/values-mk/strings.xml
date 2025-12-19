@@ -65,6 +65,12 @@
     <string name="msg_data_load_error">Грешка при вчитување на податоци</string>
     <string name="msg_field_required">Ова поле е задолжително</string>
 
+    <string name="nearby_landmarks_title">Знаменитости во близина</string>
+    <string name="nearby_landmarks_subtitle">Дознај места околу тебе</string>
+    <string name="all_landmarks_visited">Честитки! Ги посети сите знаменитости</string>
+    <string name="statistics">Статистики</string>
+    <string name="achievements_title">Достигнувања</string>
+    <string name="map_coming_soon">Доаѓа наскоро</string>
     <string name="msg_points_required">Потребни поени</string>
     <string name="settings_title">Поставки</string>
     <string name="settings_username">Корисничко име</string>

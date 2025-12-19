@@ -2,6 +2,7 @@ package com.example.sliknisi.adapters
 
 import android.app.AlertDialog
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lib.Landmark
@@ -26,14 +27,13 @@ class LandmarkAdapter(
 
     override fun onBindViewHolder(holder: ViewHolder, position: Int) {
         val landmark = app.landmarksList[position]
-        
+
         with(holder.binding) {
             tvLandmarkName.text = landmark.name
             tvCategory.text = landmark.category.name
             tvAddress.text = "${landmark.address}, ${landmark.city}"
             tvPoints.text = "${landmark.pointValue} points"
-            
-            // Show visited status
+
             if (landmark.isVisited) {
                 tvVisitedStatus.text = "✓ Visited"
                 tvVisitedStatus.setTextColor(
@@ -46,14 +46,12 @@ class LandmarkAdapter(
                 )
             }
 
-            // Click to edit
             cvLandmarkItem.setOnClickListener {
                 onItemClick(landmark)
             }
 
-            // Long click to delete
             cvLandmarkItem.setOnLongClickListener {
-                showDeleteConfirmation(landmark, holder.bindingAdapterPosition)
+                showDeleteConfirmation(landmark, holder.bindingAdapterPosition, holder.itemView)
                 true
             }
         }
@@ -61,10 +59,8 @@ class LandmarkAdapter(
 
     override fun getItemCount(): Int = app.landmarksList.size
 
-    private fun showDeleteConfirmation(landmark: Landmark, position: Int) {
-        val context = app.applicationContext
-        
-        AlertDialog.Builder(context)
+    private fun showDeleteConfirmation(landmark: Landmark, position: Int, view: View) {
+        AlertDialog.Builder(view.context)
             .setTitle("Delete Landmark")
             .setMessage("Are you sure you want to delete ${landmark.name}?")
             .setPositiveButton("Delete") { dialog, _ ->
