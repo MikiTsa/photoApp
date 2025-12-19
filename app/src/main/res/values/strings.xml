@@ -1,3 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string name="app_name">SlikniSi</string>
+    <string name="app_version">Version 7.0</string>
+    <string name="app_author">Author: Mihail Trajkoski</string>
+    <string name="app_description"><![CDATA[
+        <b>SlikniSi</b> encourages you to <i>explore your city</i> through photography.<br/><br/>
+        Discover landmarks, capture moments, and earn rewards!
+    ]]></string>
+
+    <string name="nav_map">Map</string>
+    <string name="nav_landmarks">Landmarks</string>
+    <string name="nav_profile">Profile</string>
+    <string name="nav_settings">Settings</string>
+
+    <string name="landmark_name">Name</string>
+    <string name="landmark_description">Description</string>
+    <string name="landmark_category">Category</string>
+    <string name="landmark_address">Address</string>
+    <string name="landmark_points">%d Points</string>
+    <string name="landmark_visited">Visited</string>
+    <string name="landmark_not_visited">Not Yet Visited</string>
+
+    <string name="category_monument">Monument</string>
+    <string name="category_park">Park</string>
+    <string name="category_museum">Museum</string>
+    <string name="category_viewpoint">Viewpoint</string>
+    <string name="category_historical">Historical</string>
+    <string name="category_cultural">Cultural</string>
+    <string name="category_religious">Religious</string>
+    <string name="category_architectural">Architectural</string>
+
+    <string name="profile_title">My Profile</string>
+    <string name="profile_level">Level %d</string>
+    <string name="profile_points">Points: %d</string>
+    <string name="profile_landmarks_visited">Landmarks Visited: %1$d / %2$d</string>
+    <string name="profile_photos_captured">Photos: %d</string>
+    <string name="profile_achievements">Achievements</string>
+
+    <string name="action_save">Save</string>
+    <string name="action_cancel">Cancel</string>
+    <string name="action_capture">Capture Photo</string>
+    <string name="action_navigate">Navigate</string>
+    <string name="action_visit">Mark as Visited</string>
+    <string name="action_view_details">View Details</string>
+
+    <string name="msg_landmark_visited">Landmark visited! +%d points</string>
+    <string name="msg_photo_captured">Photo captured successfully!</string>
+    <string name="msg_level_up">🎉 Level Up! You are now Level %d!</string>
+    <string name="msg_achievement_unlocked">🏆 Achievement Unlocked: %s</string>
+    <string name="msg_data_saved">Data saved successfully</string>
+    <string name="msg_data_load_error">Error loading data</string>
+
+    <string name="settings_title">Settings</string>
+    <string name="settings_username">Username</string>
+    <string name="settings_username_hint">Enter your username</string>
+    <string name="settings_notifications">Enable Notifications</string>
+    <string name="settings_map_style">Map Style</string>
+    <string name="settings_language">Language</string>
+
+    <string name="empty_landmarks">No landmarks available</string>
+    <string name="empty_photos">No photos captured yet</string>
+    <string name="empty_achievements">No achievements unlocked</string>
+
+    <string name="welcome_message">Welcome, %1$s! Explore %2$d landmarks in your city.</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_achievements">Achivements</string>
+    <string name="nav_add">Add</string>
+    <string name="action_add_landmark">Add Landmark</string>
+    <string name="action_select_photo">Select Photo</string>
+    <string name="msg_field_required">Field Required</string>
+    <string name="add_landmark_title">Add Landmark Title</string>
+    <string name="add_landmark_subtitle">Add Landmark Subtitle</string>
 </resources>

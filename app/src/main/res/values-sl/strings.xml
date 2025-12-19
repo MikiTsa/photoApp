@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Info -->
+    <string name="app_name">SlikniSi</string>
+    <string name="app_version">Različica 7.0</string>
+    <string name="app_author">Avtor: Mihail Trajkoski</string>
+    <string name="app_description"><![CDATA[
+        <b>SlikniSi</b> vas spodbuja k <i>raziskovanju mesta</i> s fotografijo.<br/><br/>
+        Odkrijte znamenitosti, ujemite trenutke in zaslužite nagrade!
+    ]]></string>
+
+    <string name="nav_map">Zemljevid</string>
+    <string name="nav_landmarks">Znamenitosti</string>
+    <string name="nav_profile">Profil</string>
+    <string name="nav_settings">Nastavitve</string>
+    <string name="nav_home">Začetna</string>
+    <string name="nav_achievements">Dosežki</string>
+    <string name="nav_add">Dodaj</string>
+
+    <string name="landmark_name">Ime</string>
+    <string name="landmark_description">Opis</string>
+    <string name="landmark_category">Kategorija</string>
+    <string name="landmark_address">Naslov</string>
+    <string name="landmark_points">%d Točk</string>
+    <string name="landmark_visited">Obiskano</string>
+    <string name="landmark_not_visited">Še ni obiskano</string>
+    <string name="add_landmark_title">Dodaj Novo Znamenitost</string>
+    <string name="action_add_landmark">Dodaj Znamenitost</string>
+    <string name="add_landmark_subtitle">Dodaj Detalji o Tnamenitosti</string>
+
+    <string name="category_monument">Spomenik</string>
+    <string name="category_park">Park</string>
+    <string name="category_museum">Muzej</string>
+    <string name="category_viewpoint">Razgledna točka</string>
+    <string name="category_historical">Zgodovinska</string>
+    <string name="category_cultural">Kulturna</string>
+    <string name="category_religious">Verska</string>
+    <string name="category_architectural">Arhitekturna</string>
+
+    <string name="profile_title">Moj Profil</string>
+    <string name="profile_level">Nivo %d</string>
+    <string name="profile_points">Točke: %d</string>
+    <string name="profile_landmarks_visited">Obiskane znamenitosti: %1$d / %2$d</string>
+    <string name="profile_photos_captured">Fotografije: %d</string>
+    <string name="profile_achievements">Dosežki</string>
+
+    <string name="action_save">Shrani</string>
+    <string name="action_cancel">Prekliči</string>
+    <string name="action_capture">Zajemi Fotografijo</string>
+    <string name="action_navigate">Navigacija</string>
+    <string name="action_visit">Označi kot Obiskano</string>
+    <string name="action_view_details">Poglej Podrobnosti</string>
+
+    <string name="msg_landmark_visited">Znamenitost obiskana! +%d točk</string>
+    <string name="msg_photo_captured">Fotografija uspešno zajeta!</string>
+    <string name="msg_level_up">🎉 Napredovanje! Sedaj ste na nivoju %d!</string>
+    <string name="msg_achievement_unlocked">🏆 Dosežek Odklenjen: %s</string>
+    <string name="msg_data_saved">Podatki uspešno shranjeni</string>
+    <string name="msg_data_load_error">Napaka pri nalaganju podatkov</string>
+
+    <string name="settings_title">Nastavitve</string>
+    <string name="settings_username">Uporabniško ime</string>
+    <string name="settings_username_hint">Vnesite svoje uporabniško ime</string>
+    <string name="settings_notifications">Omogoči Obvestila</string>
+    <string name="settings_map_style">Stil Zemljevida</string>
+    <string name="settings_language">Jezik</string>
+
+    <string name="empty_landmarks">Ni razpoložljivih znamenitosti</string>
+    <string name="empty_photos">Še ni zajetih fotografij</string>
+    <string name="empty_achievements">Ni odkletih dosežkov</string>
+
+    <string name="welcome_message">Dobrodošli, %1$s! Raziščite %2$d znamenitosti v vašem mestu.</string>
+    <string name="action_select_photo">Izberi Slike</string>
+    <string name="msg_field_required">Obvezno polje</string>
+</resources>

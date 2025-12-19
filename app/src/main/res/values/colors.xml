@@ -1,5 +1,24 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <color name="black">#FF000000</color>
-    <color name="white">#FFFFFFFF</color>
+    <color name="beige_light">#f0ead2</color>
+    <color name="green_light">#dde5b6</color>
+    <color name="green_medium">#adc178</color>
+    <color name="green_dark">#7b8f4b</color>
+    <color name="brown_light">#a98467</color>
+    <color name="brown_dark">#6c584c</color>
+    <color name="brown_medium">#79675c</color>
+
+    <color name="primary">@color/green_medium</color>
+    <color name="primary_dark">@color/green_dark</color>
+    <color name="accent">@color/brown_light</color>
+
+    <color name="background">@color/beige_light</color>
+    <color name="surface">@color/beige_light</color>
+
+    <color name="text_primary">@color/brown_dark</color>
+    <color name="text_secondary">@color/brown_medium</color>
+    <color name="text_on_primary">#FFFFFF</color>
+
+    <color name="white">#FFFFFF</color>
+    <color name="black">#000000</color>
 </resources>

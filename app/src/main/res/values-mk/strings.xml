@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- App Info -->
+    <string name="app_name">СликниСи</string>
+    <string name="app_version">Верзија 7.0</string>
+    <string name="app_author">Автор: Михаил Трајкоски</string>
+    <string name="app_description"><![CDATA[
+        <b>СликниСи</b> те поттикнува да го <i>истражуваш градот</i> преку фотографија.<br/><br/>
+        Открij знаменитости, фотографирај моменти и заработувај награди!
+    ]]></string>
+
+    <string name="nav_home">Почетна</string>
+    <string name="nav_achievements">Достигнувања</string>
+    <string name="nav_map">Мапа</string>
+    <string name="nav_add">Додади</string>
+    <string name="nav_landmarks">Знаменитости</string>
+    <string name="nav_profile">Профил</string>
+
+    <string name="nav_settings">Поставки</string>
+    <string name="landmark_name">Име</string>
+    <string name="landmark_description">Опис</string>
+    <string name="landmark_category">Категорија</string>
+    <string name="landmark_address">Адреса</string>
+    <string name="landmark_points">%d Поени</string>
+    <string name="landmark_visited">Посетено</string>
+    <string name="landmark_not_visited">Неposетено</string>
+
+    <string name="add_landmark_title">Додади Нова Знаменитост</string>
+    <string name="add_landmark_subtitle">Пополни ги детали за знаменитоста</string>
+
+    <string name="category_monument">Споменик</string>
+    <string name="category_park">Парк</string>
+    <string name="category_museum">Музеј</string>
+    <string name="category_viewpoint">Видиковец</string>
+    <string name="category_historical">Историски</string>
+    <string name="category_cultural">Културен</string>
+    <string name="category_religious">Верски</string>
+    <string name="category_architectural">Архитектонски</string>
+
+    <string name="profile_title">Мој Профил</string>
+    <string name="profile_level">Ниво %d</string>
+    <string name="profile_points">Поени: %d</string>
+    <string name="profile_landmarks_visited">Посетени знаменитости: %1$d / %2$d</string>
+    <string name="profile_photos_captured">Фотографии: %d</string>
+    <string name="profile_achievements">Достигнувања</string>
+
+    <string name="action_save">Зачувај</string>
+    <string name="action_cancel">Откажи</string>
+    <string name="action_capture">Фотографирај</string>
+    <string name="action_navigate">Навигација</string>
+    <string name="action_visit">Означи како Посетено</string>
+    <string name="action_view_details">Погледни Детали</string>
+    <string name="action_add_landmark">Додади Знаменитост</string>
+    <string name="action_select_photo">Избери Фотографија</string>
+
+    <string name="msg_landmark_visited">Знаменитост посетена! +%d поени</string>
+    <string name="msg_photo_captured">Фотографија успешно снимена!</string>
+    <string name="msg_level_up">🎉 Напредување! Сега си на ниво %d!</string>
+    <string name="msg_achievement_unlocked">🏆 Достигнување Отклучено: %s</string>
+    <string name="msg_data_saved">Податоците се зачувани</string>
+    <string name="msg_data_load_error">Грешка при вчитување на податоци</string>
+    <string name="msg_field_required">Ова поле е задолжително</string>
+
+    <string name="settings_title">Поставки</string>
+    <string name="settings_username">Корисничко име</string>
+    <string name="settings_username_hint">Внеси го твоето корисничко име</string>
+    <string name="settings_notifications">Овозможи Известувања</string>
+    <string name="settings_map_style">Стил на Мапа</string>
+    <string name="settings_language">Јазик</string>
+
+    <string name="empty_landmarks">Нема достапни знаменитости</string>
+    <string name="empty_photos">Уште нема снимени фотографии</string>
+    <string name="empty_achievements">Нема отклучени достигнувања</string>
+
+    <string name="welcome_message">Добредојде, %1$s! Истражи %2$d знаменитости во твојот град.</string>
+</resources>
