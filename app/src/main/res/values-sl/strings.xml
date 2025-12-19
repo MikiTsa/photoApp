@@ -21,11 +21,16 @@
     <string name="landmark_description">Opis</string>
     <string name="landmark_category">Kategorija</string>
     <string name="landmark_address">Naslov</string>
-    <string name="landmark_points">%d Točk</string>
+    <string name="landmark_city">Mesto</string>
+    <string name="landmark_latitude">Latituda</string>
+    <string name="landmark_longitude">Longtituda</string>
+    <string name="landmark_points">%d Točke</string>
+    <string name="landmark_points_label">Točke</string>
     <string name="landmark_visited">Obiskano</string>
     <string name="landmark_not_visited">Še ni obiskano</string>
     <string name="add_landmark_title">Dodaj Novo Znamenitost</string>
     <string name="action_add_landmark">Dodaj Znamenitost</string>
+    <string name="edit_landmark_title">Uredi Znmenitost</string>
     <string name="add_landmark_subtitle">Dodaj Detalji o Tnamenitosti</string>
 
     <string name="category_monument">Spomenik</string>
@@ -45,6 +50,7 @@
     <string name="profile_achievements">Dosežki</string>
 
     <string name="action_save">Shrani</string>
+    <string name="action_update">Posodobi</string>
     <string name="action_cancel">Prekliči</string>
     <string name="action_capture">Zajemi Fotografijo</string>
     <string name="action_navigate">Navigacija</string>
@@ -58,6 +64,7 @@
     <string name="msg_data_saved">Podatki uspešno shranjeni</string>
     <string name="msg_data_load_error">Napaka pri nalaganju podatkov</string>
 
+    <string name="msg_points_required">Obvezno polje točke</string>
     <string name="settings_title">Nastavitve</string>
     <string name="settings_username">Uporabniško ime</string>
     <string name="settings_username_hint">Vnesite svoje uporabniško ime</string>
@@ -72,4 +79,7 @@
     <string name="welcome_message">Dobrodošli, %1$s! Raziščite %2$d znamenitosti v vašem mestu.</string>
     <string name="action_select_photo">Izberi Slike</string>
     <string name="msg_field_required">Obvezno polje</string>
+    <string name="landmarks_list_title">Vse Znamenitosti</string>
+    <string name="msg_latitude_required">Resna latituda</string>
+    <string name="msg_longtitude_required">Resna longtituda</string>
 </resources>

@@ -35,7 +35,6 @@ class MainActivity : AppCompatActivity() {
         val navController = navHostFragment.navController
 
         binding.fabHome.setOnClickListener {
-            // Navigate to home fragment
             navController.navigate(R.id.homeFragment)
         }
     }

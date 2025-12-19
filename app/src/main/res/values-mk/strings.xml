@@ -21,11 +21,14 @@
     <string name="landmark_description">Опис</string>
     <string name="landmark_category">Категорија</string>
     <string name="landmark_address">Адреса</string>
+    <string name="landmark_longitude">Лонгтитуда</string>
     <string name="landmark_points">%d Поени</string>
+    <string name="landmark_points_label">Поени</string>
     <string name="landmark_visited">Посетено</string>
     <string name="landmark_not_visited">Неposетено</string>
 
     <string name="add_landmark_title">Додади Нова Знаменитост</string>
+    <string name="edit_landmark_title">Едитирај Знаменитост</string>
     <string name="add_landmark_subtitle">Пополни ги детали за знаменитоста</string>
 
     <string name="category_monument">Споменик</string>
@@ -45,6 +48,7 @@
     <string name="profile_achievements">Достигнувања</string>
 
     <string name="action_save">Зачувај</string>
+    <string name="action_update">Апдејтирај</string>
     <string name="action_cancel">Откажи</string>
     <string name="action_capture">Фотографирај</string>
     <string name="action_navigate">Навигација</string>
@@ -61,6 +65,7 @@
     <string name="msg_data_load_error">Грешка при вчитување на податоци</string>
     <string name="msg_field_required">Ова поле е задолжително</string>
 
+    <string name="msg_points_required">Потребни поени</string>
     <string name="settings_title">Поставки</string>
     <string name="settings_username">Корисничко име</string>
     <string name="settings_username_hint">Внеси го твоето корисничко име</string>
@@ -73,4 +78,9 @@
     <string name="empty_achievements">Нема отклучени достигнувања</string>
 
     <string name="welcome_message">Добредојде, %1$s! Истражи %2$d знаменитости во твојот град.</string>
+    <string name="landmark_city">Град</string>
+    <string name="landmark_latitude">Латитуда</string>
+    <string name="landmarks_list_title">Сите Знаменитости</string>
+    <string name="msg_latitude_required">Потребна права латитуда</string>
+    <string name="msg_longtitude_required">Потребна права лонгтитуда</string>
 </resources>

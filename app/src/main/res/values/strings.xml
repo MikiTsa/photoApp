@@ -9,6 +9,9 @@
     ]]></string>
 
     <string name="nav_map">Map</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_achievements">Achievements</string>
+    <string name="nav_add">Landmarks</string>
     <string name="nav_landmarks">Landmarks</string>
     <string name="nav_profile">Profile</string>
     <string name="nav_settings">Settings</string>
@@ -17,7 +20,11 @@
     <string name="landmark_description">Description</string>
     <string name="landmark_category">Category</string>
     <string name="landmark_address">Address</string>
+    <string name="landmark_city">City</string>
+    <string name="landmark_latitude">Latitude</string>
+    <string name="landmark_longitude">Longitude</string>
     <string name="landmark_points">%d Points</string>
+    <string name="landmark_points_label">Points</string>
     <string name="landmark_visited">Visited</string>
     <string name="landmark_not_visited">Not Yet Visited</string>
 
@@ -38,11 +45,14 @@
     <string name="profile_achievements">Achievements</string>
 
     <string name="action_save">Save</string>
+    <string name="action_update">Update</string>
     <string name="action_cancel">Cancel</string>
     <string name="action_capture">Capture Photo</string>
     <string name="action_navigate">Navigate</string>
     <string name="action_visit">Mark as Visited</string>
     <string name="action_view_details">View Details</string>
+    <string name="action_add_landmark">Add Landmark</string>
+    <string name="action_select_photo">Select Photo</string>
 
     <string name="msg_landmark_visited">Landmark visited! +%d points</string>
     <string name="msg_photo_captured">Photo captured successfully!</string>
@@ -50,6 +60,10 @@
     <string name="msg_achievement_unlocked">🏆 Achievement Unlocked: %s</string>
     <string name="msg_data_saved">Data saved successfully</string>
     <string name="msg_data_load_error">Error loading data</string>
+    <string name="msg_field_required">Field Required</string>
+    <string name="msg_latitude_required">Valid Latitute Required</string>
+    <string name="msg_longtitude_required">valid Longtitude Required</string>
+    <string name="msg_points_required">Valid Points Required</string>
 
     <string name="settings_title">Settings</string>
     <string name="settings_username">Username</string>
@@ -63,12 +77,8 @@
     <string name="empty_achievements">No achievements unlocked</string>
 
     <string name="welcome_message">Welcome, %1$s! Explore %2$d landmarks in your city.</string>
-    <string name="nav_home">Home</string>
-    <string name="nav_achievements">Achivements</string>
-    <string name="nav_add">Add</string>
-    <string name="action_add_landmark">Add Landmark</string>
-    <string name="action_select_photo">Select Photo</string>
-    <string name="msg_field_required">Field Required</string>
-    <string name="add_landmark_title">Add Landmark Title</string>
-    <string name="add_landmark_subtitle">Add Landmark Subtitle</string>
+    <string name="add_landmark_title">Add New Landmark</string>
+    <string name="edit_landmark_title">Edit Landmark</string>
+    <string name="add_landmark_subtitle">Fill in landmark details</string>
+    <string name="landmarks_list_title">All Landmarks</string>
 </resources>
