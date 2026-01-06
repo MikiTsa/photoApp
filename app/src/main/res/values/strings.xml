@@ -89,4 +89,11 @@
     <string name="msg_points_required">Points Required</string>
     <string name="msg_latitude_required">Latitude required</string>
     <string name="msg_longtitude_required">Longtitude required</string>
+
+    <!-- Map strings -->
+    <string name="zoom_in">Zoom In</string>
+    <string name="zoom_out">Zoom Out</string>
+    <string name="center_location">Center on Location</string>
+    <string name="map_loading">Loading map...</string>
+    <string name="map_error">Error loading map</string>
 </resources>

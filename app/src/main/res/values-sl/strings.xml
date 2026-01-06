@@ -88,4 +88,9 @@
     <string name="all_landmarks_visited">Čestitke! Obiskal si vse znamenitosti!</string>
     <string name="statistics">Statistike</string>
     <string name="achievements_title">"Dosežki "</string>
+    <string name="zoom_in">Zumiraj</string>
+    <string name="zoom_out">Odzumiraj</string>
+    <string name="center_location">Centriraj na lokacijo</string>
+    <string name="map_loading">Nalaganje zemljevida..</string>
+    <string name="map_error">Napaka pri nalaganju zemljevida</string>
 </resources>

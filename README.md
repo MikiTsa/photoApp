@@ -91,7 +91,7 @@ into a modern and visually engaging experience.
 ### Achievements
 <img src="screenshots/ss_AchievementPage.jpeg" width="250" alt="Achievements"/>
 
-*Track progress and unlock achievements*
+*Track achievements progress*
 
 ### Map
 <img src="screenshots/ss_MapPage.jpeg" width="250" alt="Map"/>
@@ -116,9 +116,9 @@ into a modern and visually engaging experience.
 ### Delete Landmark
 <img src="screenshots/ss_DeleteLandmark.jpeg" width="250" alt="Delete Landmark"/>
 
-*Confirmation before deletion*
+*Landmark deletion*
 
 ### Profile
 <img src="screenshots/ss_ProfilePage.jpeg" width="250" alt="Profile"/>
 
-*User statistics and progress*
+*User profile tab*

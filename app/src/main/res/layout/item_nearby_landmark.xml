@@ -71,7 +71,7 @@
             android:textSize="@dimen/text_size_medium"
             android:textColor="@color/green_dark"
             android:textStyle="bold"
-            android:drawableStart="@drawable/ic_location_small"
+            android:drawableStart="@drawable/ic_location"
             android:drawablePadding="4dp"
             app:layout_constraintStart_toEndOf="@id/tvPosition"
             app:layout_constraintTop_toBottomOf="@id/tvCategory"

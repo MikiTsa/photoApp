@@ -89,4 +89,9 @@
     <string name="landmarks_list_title">Сите Знаменитости</string>
     <string name="msg_latitude_required">Потребна права латитуда</string>
     <string name="msg_longtitude_required">Потребна права лонгтитуда</string>
+    <string name="zoom_in">Зумирање</string>
+    <string name="zoom_out">Одзумирање</string>
+    <string name="center_location">Центриранје локација</string>
+    <string name="map_loading">Вчитување мапа..</string>
+    <string name="map_error">Проблем при вчитување мапа</string>
 </resources>
