@@ -90,10 +90,18 @@
     <string name="msg_latitude_required">Latitude required</string>
     <string name="msg_longtitude_required">Longtitude required</string>
 
-    <!-- Map strings -->
     <string name="zoom_in">Zoom In</string>
     <string name="zoom_out">Zoom Out</string>
     <string name="center_location">Center on Location</string>
     <string name="map_loading">Loading map...</string>
     <string name="map_error">Error loading map</string>
+    <string name="marker_visited">Visited</string>
+    <string name="marker_not_visited">Not visited yet</string>
+    <string name="marker_points">%d points</string>
+    <string name="marker_view_details">View Details</string>
+    <string name="marker_navigate">Navigate</string>
+    <string name="marker_capture_photo">Capture Photo</string>
+    <string name="map_loading_landmarks">Loading landmarks...</string>
+    <string name="map_no_landmarks">No landmarks to display</string>
+    <string name="map_markers_loaded">%d landmarks loaded</string>
 </resources>

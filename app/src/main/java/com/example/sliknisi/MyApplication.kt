@@ -35,7 +35,6 @@ class MyApplication : Application() {
 
         initSharedPreferences()
 
-        // Generate and save app UUID if this is first launch
         if (!containsID()) {
             val newUUID = UUID.randomUUID().toString().replace("-", "")
             saveID(newUUID)
@@ -48,10 +47,12 @@ class MyApplication : Application() {
 
         if (landmarksList.isEmpty()) {
             Log.d(TAG, "Generating initial landmarks...")
-            val initialLandmarks = DataGenerator.generateLandmarks(20, "Maribor")
+
+            val initialLandmarks = DataGenerator.generateRealMariborLandmarks()
+            
             landmarksList.addAll(initialLandmarks)
             saveToFile()
-            Log.d(TAG, "Generated and saved ${landmarksList.size} landmarks")
+            Log.d(TAG, "Generated and saved ${landmarksList.size} real Maribor landmarks")
         }
     }
 

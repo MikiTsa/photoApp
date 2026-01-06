@@ -94,4 +94,13 @@
     <string name="center_location">Центриранје локација</string>
     <string name="map_loading">Вчитување мапа..</string>
     <string name="map_error">Проблем при вчитување мапа</string>
+    <string name="marker_visited">Посетено</string>
+    <string name="marker_not_visited">Непосетено</string>
+    <string name="marker_points">%d поени</string>
+    <string name="marker_view_details">Детали</string>
+    <string name="marker_navigate">Навигирај</string>
+    <string name="marker_capture_photo">Сликај</string>
+    <string name="map_loading_landmarks">Вчитување знаменитости..</string>
+    <string name="map_no_landmarks">Нема знаменитости</string>
+    <string name="map_markers_loaded">%d знаменитости вчитани</string>
 </resources>

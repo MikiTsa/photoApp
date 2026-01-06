@@ -93,4 +93,13 @@
     <string name="center_location">Centriraj na lokacijo</string>
     <string name="map_loading">Nalaganje zemljevida..</string>
     <string name="map_error">Napaka pri nalaganju zemljevida</string>
+    <string name="marker_visited">Obiskano</string>
+    <string name="marker_not_visited">Neobiskano</string>
+    <string name="marker_points">%d točk</string>
+    <string name="marker_view_details">Vpogled detali</string>
+    <string name="marker_navigate">Navigacija</string>
+    <string name="marker_capture_photo">Zajemanje slika</string>
+    <string name="map_loading_landmarks">Nalaganje znamenitosti...</string>
+    <string name="map_no_landmarks">Ni znamenitosti za prikaz</string>
+    <string name="map_markers_loaded">%d znamenitost naloženi</string>
 </resources>
