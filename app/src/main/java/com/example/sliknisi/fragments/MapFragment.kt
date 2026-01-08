@@ -1,4 +1,5 @@
 @file:Suppress("DEPRECATION")
+@file:SuppressLint("MissingPermission")
 
 package com.example.sliknisi.fragments
 
@@ -9,6 +10,7 @@ import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.location.Location
 import android.os.Bundle
+import android.os.Build
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
@@ -23,6 +25,7 @@ import com.example.sliknisi.MyApplication
 import com.example.sliknisi.R
 import com.example.sliknisi.databinding.FragmentMapBinding
 import com.example.sliknisi.utils.DistanceUtils
+import com.example.sliknisi.utils.NotificationUtils
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
@@ -46,7 +49,7 @@ class MapFragment : Fragment() {
 
     private lateinit var mapView: MapView
     private lateinit var app: MyApplication
-    
+
     private val landmarkMarkers = mutableListOf<Marker>()
     private var userLocationMarker: Marker? = null
     private var accuracyCircle: Polygon? = null
@@ -62,9 +65,13 @@ class MapFragment : Fragment() {
     private val defaultZoom = 15.0
     private val captureRadius = 50.0
 
+    private val notifiedLandmarks = mutableMapOf<String, Long>()
+    private val notificationCooldown = 5 * 60 * 1000L
+
     companion object {
         private const val TAG = "MapFragment"
         private const val ARG_LANDMARK_ID = "landmark_id"
+        private const val PREFS_NAME = "landmark_notifications"
     }
 
     private val locationPermissionLauncher = registerForActivityResult(
@@ -72,7 +79,7 @@ class MapFragment : Fragment() {
     ) { permissions ->
         val fineLocationGranted = permissions[Manifest.permission.ACCESS_FINE_LOCATION] ?: false
         val coarseLocationGranted = permissions[Manifest.permission.ACCESS_COARSE_LOCATION] ?: false
-        
+
         if (fineLocationGranted || coarseLocationGranted) {
             Log.d(TAG, "Location permissions granted")
             initLocationServices()
@@ -86,6 +93,14 @@ class MapFragment : Fragment() {
         }
     }
 
+    private val notificationPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (!isGranted) {
+            Toast.makeText(requireContext(), "Notifications disabled", Toast.LENGTH_SHORT).show()
+        }
+    }
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -93,17 +108,19 @@ class MapFragment : Fragment() {
     ): View {
         _binding = FragmentMapBinding.inflate(inflater, container, false)
         app = requireActivity().application as MyApplication
-        
+
         arguments?.getString(ARG_LANDMARK_ID)?.let {
             selectedLandmarkId = it
         }
-        
+
         return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        NotificationUtils.createNotificationChannel(requireContext())
+        checkNotificationPermission()
         initializeOsmdroidConfiguration()
         setupMap()
         setupMapControls()
@@ -112,9 +129,9 @@ class MapFragment : Fragment() {
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
         setupLocationCallback()
         checkLocationPermissions()
-        
+
         selectedLandmarkId?.let { centerOnLandmark(it) }
-        
+
         Log.d(TAG, "Map initialized with ${landmarkMarkers.size} landmark markers")
     }
 
@@ -129,18 +146,18 @@ class MapFragment : Fragment() {
 
     private fun setupMap() {
         mapView = binding.mapView
-        
+
         mapView.setTileSource(TileSourceFactory.MAPNIK)
         mapView.setMultiTouchControls(true)
         mapView.setBuiltInZoomControls(false)
-        
+
         val mapController = mapView.controller
         mapController.setZoom(defaultZoom)
         mapController.setCenter(mariborLocation)
 
         addCompassOverlay()
         addRotationGestureOverlay()
-        
+
         Log.d(TAG, "Map centered on Maribor: lat=${mariborLocation.latitude}, lon=${mariborLocation.longitude}")
     }
 
@@ -215,6 +232,7 @@ class MapFragment : Fragment() {
                     currentLocation = location
                     updateUserLocationMarker(location)
                     updateLandmarkDistances(location)
+                    checkProximityNotifications(location)
                     Log.d(TAG, "Location updated: ${location.latitude}, ${location.longitude}")
                 }
             }
@@ -228,7 +246,6 @@ class MapFragment : Fragment() {
         }.build()
     }
 
-    @SuppressLint("MissingPermission")
     private fun initLocationServices() {
         val hasPermission = ContextCompat.checkSelfPermission(
             requireContext(),
@@ -256,7 +273,6 @@ class MapFragment : Fragment() {
         startLocationUpdates()
     }
 
-    @SuppressLint("MissingPermission")
     private fun startLocationUpdates() {
         fusedLocationClient.requestLocationUpdates(
             locationRequest,
@@ -273,7 +289,7 @@ class MapFragment : Fragment() {
 
     private fun updateUserLocationMarker(location: Location) {
         val position = GeoPoint(location.latitude, location.longitude)
-        
+
         if (userLocationMarker == null) {
             userLocationMarker = Marker(mapView).apply {
                 this.position = position
@@ -286,7 +302,7 @@ class MapFragment : Fragment() {
         } else {
             userLocationMarker?.position = position
         }
-        
+
         updateAccuracyCircle(location)
         mapView.invalidate()
     }
@@ -294,16 +310,16 @@ class MapFragment : Fragment() {
     private fun updateAccuracyCircle(location: Location) {
         val accuracy = location.accuracy
         val center = GeoPoint(location.latitude, location.longitude)
-        
+
         accuracyCircle?.let { mapView.overlays.remove(it) }
-        
+
         accuracyCircle = Polygon(mapView).apply {
             points = Polygon.pointsAsCircle(center, accuracy.toDouble())
             fillColor = 0x220000FF
             strokeColor = 0x660000FF
             strokeWidth = 2f
         }
-        
+
         mapView.overlays.add(0, accuracyCircle)
     }
 
@@ -313,22 +329,22 @@ class MapFragment : Fragment() {
             val position = GeoPoint(it.latitude, it.longitude)
             mapView.controller.setZoom(17.0)
             mapView.controller.animateTo(position)
-            
+
             showCaptureRadius(it)
             highlightLandmark(landmarkId)
-            
-            landmarkMarkers.find { marker -> 
-                marker.position.latitude == it.latitude && 
-                marker.position.longitude == it.longitude 
+
+            landmarkMarkers.find { marker ->
+                marker.position.latitude == it.latitude &&
+                marker.position.longitude == it.longitude
             }?.showInfoWindow()
-            
+
             Log.d(TAG, "Centered on landmark: ${it.name}")
         }
     }
 
     private fun showCaptureRadius(landmark: Landmark) {
         captureRadiusCircle?.let { mapView.overlays.remove(it) }
-        
+
         val center = GeoPoint(landmark.latitude, landmark.longitude)
         captureRadiusCircle = Polygon(mapView).apply {
             points = Polygon.pointsAsCircle(center, captureRadius)
@@ -336,7 +352,7 @@ class MapFragment : Fragment() {
             strokeColor = 0x8800FF00.toInt()
             strokeWidth = 3f
         }
-        
+
         mapView.overlays.add(1, captureRadiusCircle)
         mapView.invalidate()
     }
@@ -345,7 +361,7 @@ class MapFragment : Fragment() {
         val landmark = app.landmarksList.find { it.id == landmarkId }
         landmark?.let {
             landmarkMarkers.find { marker ->
-                marker.position.latitude == it.latitude && 
+                marker.position.latitude == it.latitude &&
                 marker.position.longitude == it.longitude
             }?.apply {
                 alpha = 1.0f
@@ -355,11 +371,11 @@ class MapFragment : Fragment() {
 
     private fun updateLandmarkDistances(userLocation: Location) {
         landmarkMarkers.forEach { marker ->
-            val landmark = app.landmarksList.find { 
-                it.latitude == marker.position.latitude && 
-                it.longitude == marker.position.longitude 
+            val landmark = app.landmarksList.find {
+                it.latitude == marker.position.latitude &&
+                it.longitude == marker.position.longitude
             }
-            
+
             landmark?.let {
                 val distance = DistanceUtils.calculateDistance(
                     userLocation.latitude,
@@ -371,7 +387,7 @@ class MapFragment : Fragment() {
                 marker.snippet = buildMarkerSnippet(it, distance)
             }
         }
-        
+
         mapView.invalidate()
     }
 
@@ -406,11 +422,11 @@ class MapFragment : Fragment() {
         marker.setOnMarkerClickListener { clickedMarker, _ ->
             clickedMarker.showInfoWindow()
             mapView.controller.animateTo(clickedMarker.position)
-            
+
             Log.d(TAG, "Marker clicked: ${landmark.name}")
             true
         }
-        
+
         return marker
     }
 
@@ -426,7 +442,7 @@ class MapFragment : Fragment() {
             LandmarkCategory.ARCHITECTURAL -> R.drawable.ic_marker_monument
             LandmarkCategory.OTHER -> R.drawable.ic_marker_default
         }
-        
+
         return ContextCompat.getDrawable(requireContext(), iconResId)
     }
 
@@ -434,7 +450,7 @@ class MapFragment : Fragment() {
         val visitedStatus = if (landmark.isVisited) "✓ Visited" else "Not visited yet"
         val distanceText = distance?.let { "📏 ${DistanceUtils.formatDistanceWithSuffix(it)}\n" } ?: ""
         val captureText = if (selectedLandmarkId == landmark.id) "⭕ Capture radius: ${captureRadius.toInt()}m\n" else ""
-        
+
         return """
             $distanceText$captureText📍 ${landmark.category.name}
             ⭐ ${landmark.pointValue} points
@@ -444,10 +460,63 @@ class MapFragment : Fragment() {
         """.trimIndent()
     }
 
+    private fun checkNotificationPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
+            if (ContextCompat.checkSelfPermission(
+                    requireContext(),
+                    Manifest.permission.POST_NOTIFICATIONS
+                ) != PackageManager.PERMISSION_GRANTED) {
+                notificationPermissionLauncher.launch(Manifest.permission.POST_NOTIFICATIONS)
+            }
+        }
+    }
+
+    private fun checkProximityNotifications(userLocation: Location) {
+        val currentTime = System.currentTimeMillis()
+
+        app.landmarksList.forEach { landmark ->
+            if (landmark.isVisited) return@forEach
+
+            val distance = DistanceUtils.calculateDistance(
+                userLocation.latitude,
+                userLocation.longitude,
+                landmark.latitude,
+                landmark.longitude
+            )
+
+            if (distance <= captureRadius) {
+                val lastNotified = notifiedLandmarks[landmark.id] ?: 0L
+
+                if (currentTime - lastNotified > notificationCooldown) {
+                    if (Build.VERSION.SDK_INT < Build.VERSION_CODES.TIRAMISU ||
+                        ContextCompat.checkSelfPermission(
+                            requireContext(),
+                            Manifest.permission.POST_NOTIFICATIONS
+                        ) == PackageManager.PERMISSION_GRANTED) {
+
+                        NotificationUtils.showProximityNotification(requireContext(), landmark, distance)
+                        notifiedLandmarks[landmark.id] = currentTime
+                        saveNotifiedLandmarks()
+                        Log.d(TAG, "Notification: ${landmark.name} at ${distance.toInt()}m")
+                    }
+                }
+            }
+        }
+    }
+
+    private fun saveNotifiedLandmarks() {
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        val editor = prefs.edit()
+        notifiedLandmarks.forEach { (id, time) ->
+            editor.putLong(id, time)
+        }
+        editor.apply()
+    }
+
     override fun onResume() {
         super.onResume()
         mapView.onResume()
-        
+
         addLandmarkMarkers()
 
         if (ContextCompat.checkSelfPermission(
@@ -456,35 +525,35 @@ class MapFragment : Fragment() {
             ) == PackageManager.PERMISSION_GRANTED) {
             startLocationUpdates()
         }
-        
+
         Log.d(TAG, "Map resumed, refreshed markers")
     }
 
     override fun onPause() {
         super.onPause()
         mapView.onPause()
-        
+
         stopLocationUpdates()
         Log.d(TAG, "Map paused, stopped location updates")
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
-        
+
         stopLocationUpdates()
-        
+
         userLocationMarker?.let { mapView.overlays.remove(it) }
         userLocationMarker = null
-        
+
         accuracyCircle?.let { mapView.overlays.remove(it) }
         accuracyCircle = null
-        
+
         captureRadiusCircle?.let { mapView.overlays.remove(it) }
         captureRadiusCircle = null
-        
+
         landmarkMarkers.clear()
         selectedLandmarkId = null
-        
+
         _binding = null
         Log.d(TAG, "Map view destroyed")
     }

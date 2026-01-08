@@ -19,7 +19,7 @@ object DistanceUtils {
 
     fun formatDistanceWithSuffix(distanceMeters: Float): String {
         return if (distanceMeters < 1000) {
-            "${distanceMeters.toInt()} m away"
+            "${distanceMeters.toInt()}m away"
         } else {
             "%.1f km away".format(distanceMeters / 1000)
         }
