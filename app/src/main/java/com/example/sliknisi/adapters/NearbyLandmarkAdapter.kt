@@ -5,8 +5,11 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.example.lib.Landmark
 import com.example.sliknisi.databinding.ItemNearbyLandmarkBinding
+import com.example.sliknisi.utils.DistanceUtils
 
-class NearbyLandmarkAdapter : RecyclerView.Adapter<NearbyLandmarkAdapter.ViewHolder>() {
+class NearbyLandmarkAdapter(
+    private val onLandmarkClick: (Landmark) -> Unit
+) : RecyclerView.Adapter<NearbyLandmarkAdapter.ViewHolder>() {
 
     private var landmarks: List<Pair<Landmark, Double>> = emptyList()
 
@@ -27,11 +30,13 @@ class NearbyLandmarkAdapter : RecyclerView.Adapter<NearbyLandmarkAdapter.ViewHol
         with(holder.binding) {
             tvLandmarkName.text = landmark.name
             tvCategory.text = landmark.category.name
-            tvDistance.text = String.format("%.1f km away", distance)
+            tvDistance.text = DistanceUtils.formatDistanceWithSuffix(distance.toFloat())
             tvPoints.text = "${landmark.pointValue} points"
-            
-            // Position indicator (1st, 2nd, 3rd, etc.)
             tvPosition.text = "${position + 1}"
+            
+            root.setOnClickListener {
+                onLandmarkClick(landmark)
+            }
         }
     }
 
