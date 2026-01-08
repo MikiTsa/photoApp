@@ -5,22 +5,27 @@ package com.example.sliknisi.fragments
 
 import android.Manifest
 import android.annotation.SuppressLint
+import android.content.ContentValues
 import android.content.Context
 import android.content.pm.PackageManager
 import android.graphics.drawable.Drawable
 import android.location.Location
-import android.os.Bundle
+import android.net.Uri
 import android.os.Build
+import android.os.Bundle
+import android.provider.MediaStore
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
+import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.content.ContextCompat
 import androidx.fragment.app.Fragment
 import com.example.lib.Landmark
 import com.example.lib.LandmarkCategory
+import com.example.lib.Photo
 import com.example.sliknisi.MyApplication
 import com.example.sliknisi.R
 import com.example.sliknisi.databinding.FragmentMapBinding
@@ -68,10 +73,31 @@ class MapFragment : Fragment() {
     private val notifiedLandmarks = mutableMapOf<String, Long>()
     private val notificationCooldown = 5 * 60 * 1000L
 
+    private var photoUri: Uri? = null
+    private var nearestLandmark: Landmark? = null
+
     companion object {
         private const val TAG = "MapFragment"
         private const val ARG_LANDMARK_ID = "landmark_id"
         private const val PREFS_NAME = "landmark_notifications"
+    }
+
+    private val cameraPermissionLauncher = registerForActivityResult(
+        ActivityResultContracts.RequestPermission()
+    ) { isGranted ->
+        if (isGranted) {
+            launchCamera()
+        } else {
+            Toast.makeText(requireContext(), "Camera permission required", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private val takePictureLauncher = registerForActivityResult(
+        ActivityResultContracts.TakePicture()
+    ) { success ->
+        if (success && photoUri != null && nearestLandmark != null) {
+            handlePhotoCapture(photoUri!!, nearestLandmark!!)
+        }
     }
 
     private val locationPermissionLauncher = registerForActivityResult(
@@ -124,6 +150,7 @@ class MapFragment : Fragment() {
         initializeOsmdroidConfiguration()
         setupMap()
         setupMapControls()
+        setupCameraButton()
         addLandmarkMarkers()
 
         fusedLocationClient = LocationServices.getFusedLocationProviderClient(requireActivity())
@@ -133,6 +160,121 @@ class MapFragment : Fragment() {
         selectedLandmarkId?.let { centerOnLandmark(it) }
 
         Log.d(TAG, "Map initialized with ${landmarkMarkers.size} landmark markers")
+    }
+
+    private fun setupCameraButton() {
+        binding.fabCapturePhoto.setOnClickListener {
+            if (isWithinCaptureRadius()) {
+                checkCameraPermissionAndCapture()
+            } else {
+                Toast.makeText(requireContext(), "Move within 50m of a landmark", Toast.LENGTH_SHORT).show()
+            }
+        }
+        updateCameraButtonState()
+    }
+
+    private fun isWithinCaptureRadius(): Boolean {
+        currentLocation ?: return false
+        
+        nearestLandmark = app.landmarksList
+            .filterNot { it.isVisited }
+            .minByOrNull { landmark ->
+                DistanceUtils.calculateDistance(
+                    currentLocation!!.latitude,
+                    currentLocation!!.longitude,
+                    landmark.latitude,
+                    landmark.longitude
+                )
+            }
+
+        nearestLandmark?.let { landmark ->
+            val distance = DistanceUtils.calculateDistance(
+                currentLocation!!.latitude,
+                currentLocation!!.longitude,
+                landmark.latitude,
+                landmark.longitude
+            )
+            return distance <= captureRadius
+        }
+
+        return false
+    }
+
+    private fun updateCameraButtonState() {
+        val withinRadius = isWithinCaptureRadius()
+        binding.fabCapturePhoto.isEnabled = withinRadius
+        binding.fabCapturePhoto.backgroundTintList = ContextCompat.getColorStateList(
+            requireContext(),
+            if (withinRadius) R.color.green_dark else R.color.accent
+        )
+    }
+
+    private fun checkCameraPermissionAndCapture() {
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.CAMERA
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                launchCamera()
+            }
+            else -> {
+                cameraPermissionLauncher.launch(Manifest.permission.CAMERA)
+            }
+        }
+    }
+
+    private fun launchCamera() {
+        val timestamp = System.currentTimeMillis()
+        val contentValues = ContentValues().apply {
+            put(MediaStore.Images.Media.DISPLAY_NAME, "IMG_${timestamp}.jpg")
+            put(MediaStore.Images.Media.MIME_TYPE, "image/jpeg")
+            if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.Q) {
+                put(MediaStore.Images.Media.RELATIVE_PATH, "Pictures/SlikniSi")
+            }
+        }
+
+        photoUri = requireContext().contentResolver.insert(
+            MediaStore.Images.Media.EXTERNAL_CONTENT_URI,
+            contentValues
+        )
+
+        photoUri?.let {
+            takePictureLauncher.launch(it)
+        }
+    }
+
+    private fun handlePhotoCapture(uri: Uri, landmark: Landmark) {
+        currentLocation?.let { location ->
+            val photo = Photo(
+                landmarkId = landmark.id,
+                filePath = uri.toString(),
+                timestamp = System.currentTimeMillis(),
+                latitude = location.latitude,
+                longitude = location.longitude
+            )
+
+            app.addPhoto(photo)
+            
+            if (!landmark.isVisited) {
+                landmark.isVisited = true
+                app.updateLandmark(landmark)
+                
+                Toast.makeText(
+                    requireContext(),
+                    "Landmark visited! +${landmark.pointValue} points",
+                    Toast.LENGTH_SHORT
+                ).show()
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    getString(R.string.msg_photo_captured),
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+
+            updateCameraButtonState()
+            addLandmarkMarkers()
+        }
     }
 
     private fun initializeOsmdroidConfiguration() {
@@ -194,74 +336,64 @@ class MapFragment : Fragment() {
                 mapView.controller.animateTo(userGeoPoint)
                 Log.d(TAG, "Centered map on user location")
             } ?: run {
-                mapView.controller.animateTo(mariborLocation)
-                Log.d(TAG, "No user location available, centered on Maribor")
+                Toast.makeText(requireContext(), "Location not available", Toast.LENGTH_SHORT).show()
             }
         }
     }
 
     private fun checkLocationPermissions() {
-        val fineLocationPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        )
-        val coarseLocationPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_COARSE_LOCATION
-        )
-
-        if (fineLocationPermission == PackageManager.PERMISSION_GRANTED ||
-            coarseLocationPermission == PackageManager.PERMISSION_GRANTED) {
-            Log.d(TAG, "Location permissions already granted")
-            initLocationServices()
-        } else {
-            Log.d(TAG, "Requesting location permissions")
-            locationPermissionLauncher.launch(
-                arrayOf(
-                    Manifest.permission.ACCESS_FINE_LOCATION,
-                    Manifest.permission.ACCESS_COARSE_LOCATION
+        when {
+            ContextCompat.checkSelfPermission(
+                requireContext(),
+                Manifest.permission.ACCESS_FINE_LOCATION
+            ) == PackageManager.PERMISSION_GRANTED -> {
+                initLocationServices()
+            }
+            else -> {
+                locationPermissionLauncher.launch(
+                    arrayOf(
+                        Manifest.permission.ACCESS_FINE_LOCATION,
+                        Manifest.permission.ACCESS_COARSE_LOCATION
+                    )
                 )
-            )
+            }
         }
     }
 
     private fun setupLocationCallback() {
+        locationRequest = LocationRequest.Builder(
+            Priority.PRIORITY_HIGH_ACCURACY,
+            5000
+        ).apply {
+            setMinUpdateIntervalMillis(2000)
+        }.build()
+
         locationCallback = object : LocationCallback() {
-            override fun onLocationResult(locationResult: LocationResult) {
-                locationResult.lastLocation?.let { location ->
+            override fun onLocationResult(result: LocationResult) {
+                result.lastLocation?.let { location ->
                     currentLocation = location
                     updateUserLocationMarker(location)
                     updateLandmarkDistances(location)
+                    updateCameraButtonState()
                     checkProximityNotifications(location)
                     Log.d(TAG, "Location updated: ${location.latitude}, ${location.longitude}")
                 }
             }
         }
 
-        locationRequest = LocationRequest.Builder(
-            Priority.PRIORITY_HIGH_ACCURACY,
-            10000
-        ).apply {
-            setMinUpdateIntervalMillis(5000)
-        }.build()
+        val prefs = requireContext().getSharedPreferences(PREFS_NAME, Context.MODE_PRIVATE)
+        app.landmarksList.forEach { landmark ->
+            notifiedLandmarks[landmark.id] = prefs.getLong(landmark.id, 0L)
+        }
     }
 
     private fun initLocationServices() {
-        val hasPermission = ContextCompat.checkSelfPermission(
-            requireContext(),
-            Manifest.permission.ACCESS_FINE_LOCATION
-        ) == PackageManager.PERMISSION_GRANTED
-
-        if (!hasPermission) {
-            Log.d(TAG, "Location permissions not granted")
-            return
-        }
-
-        fusedLocationClient.lastLocation.addOnSuccessListener { location: Location? ->
+        fusedLocationClient.lastLocation.addOnSuccessListener { location ->
             location?.let {
                 currentLocation = it
                 updateUserLocationMarker(it)
                 updateLandmarkDistances(it)
+                updateCameraButtonState()
                 if (selectedLandmarkId == null) {
                     val userGeoPoint = GeoPoint(it.latitude, it.longitude)
                     mapView.controller.animateTo(userGeoPoint)

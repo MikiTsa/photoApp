@@ -5,7 +5,9 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.GridLayoutManager
 import com.example.sliknisi.MyApplication
+import com.example.sliknisi.adapters.PhotoAdapter
 import com.example.sliknisi.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {
@@ -14,6 +16,7 @@ class ProfileFragment : Fragment() {
     private val binding get() = _binding!!
     
     private lateinit var app: MyApplication
+    private lateinit var photoAdapter: PhotoAdapter
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -28,6 +31,7 @@ class ProfileFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         displayProfileInfo()
+        setupGallery()
     }
 
     private fun displayProfileInfo() {
@@ -35,13 +39,14 @@ class ProfileFragment : Fragment() {
         val visitedLandmarks = app.landmarksList.count { it.isVisited }
         val totalPoints = app.landmarksList.filter { it.isVisited }.sumOf { it.pointValue }
         val level = (totalPoints / 100) + 1
+        val photosCount = app.photosList.size
         
         with(binding) {
             tvUsername.text = "Explorer"
             tvLevel.text = "Level $level"
             tvPoints.text = "$totalPoints points"
             tvLandmarksVisited.text = "$visitedLandmarks / $totalLandmarks landmarks visited"
-            tvPhotosCount.text = "0 photos captured"
+            tvPhotosCount.text = "$photosCount photos captured"
             
             // Progress calculation
             val progress = if (totalLandmarks > 0) {
@@ -54,9 +59,27 @@ class ProfileFragment : Fragment() {
         }
     }
 
+    private fun setupGallery() {
+        photoAdapter = PhotoAdapter(app.photosList.reversed())
+        
+        binding.rvGallery.apply {
+            layoutManager = GridLayoutManager(requireContext(), 3)
+            adapter = photoAdapter
+        }
+
+        if (app.photosList.isEmpty()) {
+            binding.rvGallery.visibility = View.GONE
+            binding.tvEmptyGallery.visibility = View.VISIBLE
+        } else {
+            binding.rvGallery.visibility = View.VISIBLE
+            binding.tvEmptyGallery.visibility = View.GONE
+        }
+    }
+
     override fun onResume() {
         super.onResume()
         displayProfileInfo()
+        setupGallery()
     }
 
     override fun onDestroyView() {
