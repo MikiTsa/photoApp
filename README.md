@@ -89,14 +89,16 @@ into a modern and visually engaging experience.
 *Nearby landmarks sorted by distance*
 
 ### Achievements
-<img src="screenshots/ss_AchievementPage.jpeg" width="250" alt="Achievements"/>
-
+<img src="screenshots/ss_AchievementPage.jpeg" width="250" alt="Achievements1"/>
+<img src="screenshots/ss1_AchievementPage.jpeg" width="250" alt="Achievements2"/>
 *Track achievements progress*
 
 ### Map
-<img src="screenshots/ss_MapPage.jpeg" width="250" alt="Map"/>
-
-*Map integration (coming soon)*
+<img src="screenshots/ss_MapPage.jpeg" width="250" alt="Map1"/>
+<img src="screenshots/ss1_MapPage.jpeg" width="250" alt="Map2"/>
+<img src="screenshots/ss1_CameraPerm.jpeg" width="250" alt="Map3"/>
+<img src="screenshots/ss1_LandmarkDesc.jpeg" width="250" alt="Map4"/>
+*Map integration*
 
 ### All Landmarks
 <img src="screenshots/ss_LandmarksList.jpeg" width="250" alt="Landmarks List"/>
@@ -119,6 +121,11 @@ into a modern and visually engaging experience.
 *Landmark deletion*
 
 ### Profile
-<img src="screenshots/ss_ProfilePage.jpeg" width="250" alt="Profile"/>
-
+<img src="screenshots/ss_ProfilePage.jpeg" width="250" alt="Profile1"/>
+<img src="screenshots/ss1_ProfilePage.jpeg" width="250" alt="Profile2"/>
 *User profile tab*
+
+### Notifications
+<img src="screenshots/ss1_Notification.jpeg" width="250" alt="Notification1"/>
+
+*Notification*
