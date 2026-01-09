@@ -70,6 +70,14 @@ class HomeFragment : Fragment() {
         
         setupRecyclerView()
         checkLocationAndDisplay()
+
+        if (!app.isDataLoaded) {
+            app.onDataLoadedCallback = {
+                activity?.runOnUiThread {
+                    checkLocationAndDisplay()
+                }
+            }
+        }
     }
 
     private fun setupRecyclerView() {

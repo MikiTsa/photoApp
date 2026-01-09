@@ -4,17 +4,16 @@ import java.util.UUID
 
 data class Landmark(
     val id: String = UUID.randomUUID().toString().replace("-", ""),
-    val name: String,
-    val description: String,
-    val latitude: Double,
-    val longitude: Double,
-    val category: LandmarkCategory,
-    val pointValue: Int,
-    var isVisited: Boolean = false,
-    var visitedDate: Long? = null,
-    val city: String,
-    val address: String
-) : Comparable<Landmark> {
+    var name: String = "",
+    var description: String = "",
+    var latitude: Double = 0.0,
+    var longitude: Double = 0.0,
+    var category: LandmarkCategory = LandmarkCategory.OTHER,
+    var pointValue: Int = 0,
+    var city: String = "",
+    var address: String = "",
+    var isVisited: Boolean = false
+): Comparable<Landmark> {
 
     override fun compareTo(other: Landmark): Int {
         return pointValue.compareTo(other.pointValue)

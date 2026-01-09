@@ -172,8 +172,7 @@ class LandmarkEditFragment : Fragment() {
                 pointValue = points,
                 city = city,
                 address = address,
-                isVisited = app.findLandmarkById(landmarkId!!)?.isVisited ?: false,
-                visitedDate = app.findLandmarkById(landmarkId!!)?.visitedDate
+                isVisited = app.findLandmarkById(landmarkId!!)?.isVisited ?: false
             )
             app.updateLandmark(updatedLandmark)
             Toast.makeText(requireContext(), "Landmark updated!", Toast.LENGTH_SHORT).show()
